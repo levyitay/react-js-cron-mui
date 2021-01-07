@@ -111,7 +111,7 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
   width: auto !important;
 }
 .react-js-cron-clear-button {
-  margin-left: 10px;
+  margin-left: 20px;
   margin-bottom: 10px;
 }
 .react-js-cron-disabled .react-js-cron-select.ant-select-disabled {
@@ -143,6 +143,8 @@ div.react-js-cron-select.react-js-cron-custom-select.ant-select
   > div {
   z-index: 2;
 }
+
+
 
 .sbdocs-content {
   max-width: 1400px !important;
@@ -191,4 +193,4 @@ div.react-js-cron-select.react-js-cron-custom-select.ant-select
 }
 
 
-/*# sourceMappingURL=main.5ae8a214.chunk.css.map*/
+/*# sourceMappingURL=main.a23c8e90.chunk.css.map*/
