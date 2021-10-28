@@ -19,7 +19,8 @@ export default function CustomSelect(props: CustomSelectProps) {
     clockFormat,
     optionsList,
     unit,
-    ...selectProps,
+    placeholder,
+    ...selectProps
   } = props
 
   const stringValue = useMemo(() => {
@@ -62,14 +63,16 @@ export default function CustomSelect(props: CustomSelectProps) {
   )
   const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
-    (props) => {
-      const value = props
-
-      if (!value || Number(value[0]) === NaN) {
+    (itemValue: string[]) => {
+      console.log('itemValue: ', itemValue)
+      if (itemValue.length === 0) {
+        return <>{placeholder}</>
+      }
+      if (!itemValue || Number.isNaN(Number(itemValue[0]))) {
         return <></>
       }
 
-      const parsedArray = parsePartArray(value, unit)
+      const parsedArray = parsePartArray(itemValue.map(Number), unit)
       const cronValue = partToString(
         parsedArray,
         unit,
@@ -94,9 +97,9 @@ export default function CustomSelect(props: CustomSelectProps) {
 
   const simpleClick = useCallback(
     (event: any) => {
-      let newValueOption: number[] = event.target.value;
+      let newValueOption: number[] = event.target.value
       if (newValueOption.length == 0) {
-        newValueOption.push(0);
+        newValueOption.push(0)
       }
       newValueOption = Array.isArray(newValueOption)
         ? sort(newValueOption)
@@ -133,6 +136,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       className={internalClassName}
       autoWidth={false}
       disabled={disabled}
+      displayEmpty
       {...selectProps}
     >
       {options.map((obj) => (
