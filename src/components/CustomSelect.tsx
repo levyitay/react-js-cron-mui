@@ -96,8 +96,14 @@ export default function CustomSelect(props: CustomSelectProps) {
   )
 
   const simpleClick = useCallback(
-    (event: any) => {
-      let newValueOption: number[] = event.target.value
+    (
+      event: React.ChangeEvent<{
+        value: unknown
+      }>
+    ) => {
+      let newValueOption: number[] = (event.target.value as string[]).map(
+        Number
+      )
       if (newValueOption.length == 0) {
         newValueOption.push(0)
       }
