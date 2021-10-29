@@ -64,7 +64,6 @@ export default function CustomSelect(props: CustomSelectProps) {
   const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
     (itemValue: string[]) => {
-      console.log('itemValue: ', itemValue)
       if (itemValue.length === 0) {
         return <>{placeholder}</>
       }
