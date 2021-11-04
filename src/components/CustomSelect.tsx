@@ -103,9 +103,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       let newValueOption: number[] = (event.target.value as string[]).map(
         Number
       )
-      if (newValueOption.length == 0) {
-        newValueOption.push(0)
-      }
+
       newValueOption = Array.isArray(newValueOption)
         ? sort(newValueOption)
         : [newValueOption]
