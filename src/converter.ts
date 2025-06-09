@@ -106,7 +106,8 @@ export function getCronStringFromValues(
   weekDays: number[] | undefined,
   hours: number[] | undefined,
   minutes: number[] | undefined,
-  humanizeValue?: boolean
+  humanizeValue?: boolean,
+  useCronIntervals?: boolean,
 ) {
   if (period === 'reboot') {
     return '@reboot'
@@ -125,7 +126,8 @@ export function getCronStringFromValues(
 
   const parsedArray = parseCronArray(
     [newMinutes, newHours, newMonthDays, newMonths, newWeekDays],
-    humanizeValue
+    humanizeValue,
+    useCronIntervals,
   )
 
   return cronToString(parsedArray)
@@ -138,6 +140,7 @@ export function partToString(
   cronPart: number[],
   unit: Unit,
   humanize?: boolean,
+  useCronIntervals?: boolean,
   leadingZero?: LeadingZero,
   clockFormat?: ClockFormat
 ) {
@@ -148,7 +151,7 @@ export function partToString(
   } else {
     const step = getStep(cronPart)
 
-    if (step && isInterval(cronPart, step)) {
+    if (useCronIntervals && step && isInterval(cronPart, step)) {
       if (isFullInterval(cronPart, unit, step)) {
         retval = `*/${step}`
       } else {
@@ -233,13 +236,13 @@ export function formatValue(
 /**
  * Parses a 2-dimentional array of integers as a cron schedule
  */
-function parseCronArray(cronArr: number[][], humanizeValue?: boolean) {
+function parseCronArray(cronArr: number[][], humanizeValue?: boolean, useCronIntervals?: boolean) {
   if (cronArr.length === 5) {
     return cronArr.map((partArr, idx) => {
       const unit = UNITS[idx]
       const parsedArray = parsePartArray(partArr, unit)
 
-      return partToString(parsedArray, unit, humanizeValue)
+      return partToString(parsedArray, unit, humanizeValue, useCronIntervals)
     })
   }
 

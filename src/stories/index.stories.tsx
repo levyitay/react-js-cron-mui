@@ -95,6 +95,7 @@ export function DynamicSettings() {
   const [readOnly, setReadOnly] = useState<boolean>(false)
   const [humanizeLabels, setHumanizeLabels] = useState<boolean>(true)
   const [humanizeValue, setHumanizeValue] = useState<boolean>(false)
+  const [useCronIntervals, setUseCronIntervals] = useState<boolean>(true)
   const [displayErrorText, setDisplayErrorText] = useState<boolean>(true)
   const [displayErrorStyle, setDisplayErrorStyle] = useState<boolean>(true)
   const [displayClearButton, setDisplayClearButton] = useState<boolean>(true)
@@ -201,7 +202,7 @@ export function DynamicSettings() {
             onChange={() => setReadOnly((prevValue) => !prevValue)}
           />
         } />
-        <FormControlLabel label='Humainze labels' control={
+        <FormControlLabel label='Humanize labels' control={
           <Switch
             checked={humanizeLabels}
             onChange={() => setHumanizeLabels((prevValue) => !prevValue)}
@@ -211,6 +212,12 @@ export function DynamicSettings() {
           <Switch
             checked={humanizeValue}
             onChange={() => setHumanizeValue((prevValue) => !prevValue)}
+          />
+        } />
+        <FormControlLabel label='Use cron intervals' control={
+          <Switch
+            checked={useCronIntervals}
+            onChange={() => setUseCronIntervals((prevValue) => !prevValue)}
           />
         } />
         <FormControlLabel label='Display error text' control={
@@ -358,6 +365,7 @@ export function DynamicSettings() {
         readOnly={readOnly}
         humanizeLabels={humanizeLabels}
         humanizeValue={humanizeValue}
+        useCronIntervals={useCronIntervals}
         displayError={displayErrorStyle}
         clearButton={displayClearButton}
         clearButtonAction={clearButtonAction}

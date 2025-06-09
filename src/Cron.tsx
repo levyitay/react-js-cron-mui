@@ -28,6 +28,7 @@ export default function Cron(props: CronProps) {
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
+    useCronIntervals = true,
     disabled = false,
     readOnly = false,
     leadingZero = false,
@@ -126,7 +127,8 @@ export default function Cron(props: CronProps) {
           weekDays,
           hours,
           minutes,
-          humanizeValue
+          humanizeValue,
+          useCronIntervals,
         )
 
         setValue(cron)
@@ -147,6 +149,7 @@ export default function Cron(props: CronProps) {
       hours,
       minutes,
       humanizeValue,
+      useCronIntervals,
       valueCleared,
     ]
   )
@@ -290,6 +293,7 @@ export default function Cron(props: CronProps) {
                 disabled={disabled}
                 readOnly={readOnly}
                 period={periodForRender}
+                useCronIntervals={useCronIntervals}
                 {...selectProps}
               />
             )}
@@ -305,6 +309,7 @@ export default function Cron(props: CronProps) {
                 readOnly={readOnly}
                 leadingZero={leadingZero}
                 period={periodForRender}
+                useCronIntervals={useCronIntervals}
                 {...selectProps}
               />
             )}
@@ -322,6 +327,7 @@ export default function Cron(props: CronProps) {
                   disabled={disabled}
                   readOnly={readOnly}
                   period={periodForRender}
+                  useCronIntervals={useCronIntervals}
                   {...selectProps}
                 />
               )}
@@ -338,6 +344,7 @@ export default function Cron(props: CronProps) {
                   leadingZero={leadingZero}
                   clockFormat={clockFormat}
                   period={periodForRender}
+                  useCronIntervals={useCronIntervals}
                   {...selectProps}
                 />
               )}
@@ -353,6 +360,7 @@ export default function Cron(props: CronProps) {
                   readOnly={readOnly}
                   leadingZero={leadingZero}
                   clockFormat={clockFormat}
+                  useCronIntervals={useCronIntervals}
                   {...selectProps}
                 />
               )}
