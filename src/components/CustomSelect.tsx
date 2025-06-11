@@ -13,13 +13,14 @@ export default function CustomSelect(props: CustomSelectProps) {
     locale,
     className,
     humanizeLabels,
+    useCronIntervals,
     disabled,
     readOnly,
     leadingZero,
     clockFormat,
     optionsList,
     unit,
-    ...selectProps,
+    ...selectProps
   } = props
 
   const stringValue = useMemo(() => {
@@ -65,7 +66,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     (props) => {
       const value = props
 
-      if (!value || Number(value[0]) === NaN) {
+      if (!value || isNaN(Number(value[0]))) {
         return <></>
       }
 
@@ -74,6 +75,7 @@ export default function CustomSelect(props: CustomSelectProps) {
         parsedArray,
         unit,
         humanizeLabels,
+        useCronIntervals,
         leadingZero,
         clockFormat
       )

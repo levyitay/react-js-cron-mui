@@ -109,6 +109,16 @@ CronProps {
    * Default: false
    */
   humanizeValue?: boolean
+  
+  /**
+   * Controls whether to use cron intervals syntax.
+   *
+   * Example: When set to true, a cron expression like '0 8 * * 1,3,5' ("At 08:00 AM, only on Monday, Wednesday, and Friday")
+   * would be changed to '0 8 * * 1-5/2' ("At 08:00 AM, every 2 days of the week, Monday through Friday")
+   *
+   * Default: true
+   */
+  useCronIntervals?: boolean
 
   /**
    * Add a "0" before numbers lower than 10.
