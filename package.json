@@ -1,6 +1,6 @@
 {
   "name": "react-js-cron-mui",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A React cron editor with Material UI a forked repo from Xavier Rutayisire (https://github.com/xrutayisire/react-js-cron)",
   "author": "Itay Levy (https://github.com/levyitay/)",
   "license": "MIT",
@@ -24,7 +24,6 @@
   "bugs": {
     "url": "https://github.com/levyitay/react-js-cron-mui/issues"
   },
- 
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/cjs/index.d.ts",
@@ -75,8 +74,5 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/core": "^4.11.2"
   },
-  "dependencies": {
-  
-   
-  }
+  "dependencies": {}
 }
