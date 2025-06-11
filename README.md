@@ -31,7 +31,7 @@ Live **demo** and **usage** at [https://levyitay.github.io/react-js-cron/](https
 Be sure that you have these dependencies on your project:
 * react (>=16.8.0)
 * material-ui (>=4.0.0)
-* fontsource-roboto
+* @fontsource/roboto
 
 ```bash
 # Yarn
