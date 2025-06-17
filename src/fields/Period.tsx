@@ -1,9 +1,19 @@
 import React, { useCallback, useMemo } from 'react'
 import { Select, MenuItem } from '@material-ui/core'
 
-import { PeriodProps } from '../types'
+import { PeriodProps, PeriodType } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
+
+export const ALL_PERIODS = [
+  'year',
+  'month',
+  'week',
+  'day',
+  'hour',
+  'minute',
+  'reboot',
+] as PeriodType[]
 
 export default function Period(props: PeriodProps) {
   const {
@@ -14,44 +24,62 @@ export default function Period(props: PeriodProps) {
     disabled,
     readOnly,
     shortcuts,
+    periodsToDisplay = ALL_PERIODS,
     ...selectProps
   } = props
-  let options = [
-    {
-      value: 'year',
-      label: locale.yearOption || DEFAULT_LOCALE_EN.yearOption,
-    },
-    {
-      value: 'month',
-      label: locale.monthOption || DEFAULT_LOCALE_EN.monthOption,
-    },
-    {
-      value: 'week',
-      label: locale.weekOption || DEFAULT_LOCALE_EN.weekOption,
-    },
-    {
-      value: 'day',
-      label: locale.dayOption || DEFAULT_LOCALE_EN.dayOption,
-    },
-    {
-      value: 'hour',
-      label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
-    },
-    {
-      value: 'minute',
-      label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
-    },
-  ]
 
-  if (shortcuts && (shortcuts === true || shortcuts.includes('@reboot'))) {
-    options = [
-      ...options,
+  const options = useMemo(() => {
+    const opts = [
       {
-        value: 'reboot',
-        label: locale.rebootOption || DEFAULT_LOCALE_EN.rebootOption,
+        value: 'year',
+        label: locale.yearOption || DEFAULT_LOCALE_EN.yearOption,
+      },
+      {
+        value: 'month',
+        label: locale.monthOption || DEFAULT_LOCALE_EN.monthOption,
+      },
+      {
+        value: 'week',
+        label: locale.weekOption || DEFAULT_LOCALE_EN.weekOption,
+      },
+      {
+        value: 'day',
+        label: locale.dayOption || DEFAULT_LOCALE_EN.dayOption,
+      },
+      {
+        value: 'hour',
+        label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
+      },
+      {
+        value: 'minute',
+        label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
       },
     ]
-  }
+
+    if (shortcuts && (shortcuts === true || shortcuts.includes('@reboot'))) {
+      opts.push({
+        value: 'reboot',
+        label: locale.rebootOption || DEFAULT_LOCALE_EN.rebootOption,
+      })
+    }
+
+    return opts
+  }, [
+    locale.yearOption,
+    locale.monthOption,
+    locale.weekOption,
+    locale.dayOption,
+    locale.hourOption,
+    locale.minuteOption,
+    locale.rebootOption,
+    shortcuts,
+  ])
+
+  const selectedPeriodOptions = useMemo(() => {
+    return options.filter(
+      option => periodsToDisplay.includes(option.value)
+    );
+  }, [options, periodsToDisplay])
 
   const handleChange = useCallback(
     (event) => {
@@ -110,7 +138,7 @@ export default function Period(props: PeriodProps) {
         open={readOnly ? false : undefined}
         {...selectProps}
       >
-        {options.map((obj) => (
+        {selectedPeriodOptions.map((obj) => (
           <MenuItem key={obj.value} value={obj.value}>
             {obj.label}
           </MenuItem>

@@ -64,6 +64,19 @@ export interface CronProps {
   defaultPeriod?: PeriodType
 
   /**
+   * Define the options of periods that will be displayed.
+   *
+   * Example: If you only want the option to generate cron expressions to
+   * represent a time in the day you can define periodsToDisplay={['day']}.
+   * The other options won't be available in the period select component.
+   *
+   * Default: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+   *
+   * OBS: 'reboot' option will apply only when '@reboot' is listed in shortcuts list.
+   */
+  periodsToDisplay?: PeriodType[]
+
+  /**
    * Disable the cron component.
    *
    * Default: false
@@ -236,6 +249,7 @@ export interface PeriodProps
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
+  periodsToDisplay?: PeriodType[]
 }
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { Button } from '@material-ui/core'
 import { CronProps, PeriodType } from './types'
-import Period from './fields/Period'
+import Period, { ALL_PERIODS } from './fields/Period'
 import MonthDays from './fields/MonthDays'
 import Months from './fields/Months'
 import Hours from './fields/Hours'
@@ -25,6 +25,7 @@ export default function Cron(props: CronProps) {
     onError,
     className,
     defaultPeriod = 'day',
+    periodsToDisplay = ALL_PERIODS,
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
@@ -276,6 +277,7 @@ export default function Cron(props: CronProps) {
         disabled={disabled}
         readOnly={readOnly}
         shortcuts={shortcuts}
+        periodsToDisplay={periodsToDisplay}
         {...selectProps}
       />
 
