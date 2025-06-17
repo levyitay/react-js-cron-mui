@@ -77,6 +77,18 @@ export interface CronProps {
   periodsToDisplay?: PeriodType[]
 
   /**
+   * Define which fields can select multiple values.
+   *
+   * Example: If you don't want to allow multiple hours or minutes to be selected,
+   * you can define allowMultipleSelectFor={['months', 'month-days', 'week-days']}.
+   * This way only months, month days and week days select components will be allowed
+   * to have multiple values in the cron expression.
+   *
+   * Default: ['months', 'month-days', 'week-days', 'hours', 'minutes']
+   */
+  allowMultipleSelectFor?: Omit<CronType, 'period'>[]
+
+  /**
    * Disable the cron component.
    *
    * Default: false
@@ -243,9 +255,10 @@ export interface FieldProps {
   readOnly: boolean
   useCronIntervals: boolean
   period: PeriodType
+  multiple: boolean
 }
 export interface PeriodProps
-  extends Omit<FieldProps, 'value' | 'setValue' | 'period' | 'useCronIntervals'> {
+  extends Omit<FieldProps, 'value' | 'setValue' | 'period' | 'useCronIntervals' | 'multiple'> {
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts

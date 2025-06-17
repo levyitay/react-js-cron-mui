@@ -26,6 +26,13 @@ export default function Cron(props: CronProps) {
     className,
     defaultPeriod = 'day',
     periodsToDisplay = ALL_PERIODS,
+    allowMultipleSelectFor = [
+      'months',
+      'month-days',
+      'week-days',
+      'hours',
+      'minutes',
+    ],
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
@@ -296,6 +303,7 @@ export default function Cron(props: CronProps) {
                 readOnly={readOnly}
                 period={periodForRender}
                 useCronIntervals={useCronIntervals}
+                multiple={allowMultipleSelectFor.includes('months')}
                 {...selectProps}
               />
             )}
@@ -312,6 +320,7 @@ export default function Cron(props: CronProps) {
                 leadingZero={leadingZero}
                 period={periodForRender}
                 useCronIntervals={useCronIntervals}
+                multiple={allowMultipleSelectFor.includes('month-days')}
                 {...selectProps}
               />
             )}
@@ -330,6 +339,7 @@ export default function Cron(props: CronProps) {
                   readOnly={readOnly}
                   period={periodForRender}
                   useCronIntervals={useCronIntervals}
+                  multiple={allowMultipleSelectFor.includes('week-days')}
                   {...selectProps}
                 />
               )}
@@ -347,6 +357,7 @@ export default function Cron(props: CronProps) {
                   clockFormat={clockFormat}
                   period={periodForRender}
                   useCronIntervals={useCronIntervals}
+                  multiple={allowMultipleSelectFor.includes('hours')}
                   {...selectProps}
                 />
               )}
@@ -363,6 +374,7 @@ export default function Cron(props: CronProps) {
                   leadingZero={leadingZero}
                   clockFormat={clockFormat}
                   useCronIntervals={useCronIntervals}
+                  multiple={allowMultipleSelectFor.includes('minutes')}
                   {...selectProps}
                 />
               )}
