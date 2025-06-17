@@ -21,6 +21,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     optionsList,
     unit,
     multiple,
+    grid: _grid,
     ...selectProps
   } = props
 
