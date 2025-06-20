@@ -21,8 +21,8 @@ import {
   MenuItem,
   Checkbox,
   ListItemText,
-} from '@material-ui/core'
-import InfoIcon from '@material-ui/icons/Info';
+} from '@mui/material'
+import InfoIcon from '@mui/icons-material/Info';
 import DividerWithText from '../components/DividerWithText'
 
 import Cron, { CronError, AllowEmpty, ClockFormat, PeriodType } from '../index'

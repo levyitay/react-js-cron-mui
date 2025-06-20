@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { Select, MenuItem } from '@material-ui/core'
+import { Select, MenuItem, FormControl } from '@mui/material'
 
 import { PeriodProps, PeriodType } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
@@ -128,22 +128,24 @@ export default function Period(props: PeriodProps) {
         <span>{locale.prefixPeriod || DEFAULT_LOCALE_EN.prefixPeriod}</span>
       )}
 
-      <Select
-        key={JSON.stringify(locale)}
-        defaultValue={value}
-        value={value}
-        onChange={handleChange}
-        className={selectClassName}
-        disabled={disabled}
-        open={readOnly ? false : undefined}
-        {...selectProps}
-      >
-        {selectedPeriodOptions.map((obj) => (
-          <MenuItem key={obj.value} value={obj.value}>
-            {obj.label}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl variant="standard">
+        <Select
+          key={JSON.stringify(locale)}
+          defaultValue={value}
+          value={value}
+          onChange={handleChange}
+          className={selectClassName}
+          disabled={disabled}
+          open={readOnly ? false : undefined}
+          {...selectProps}
+        >
+          {selectedPeriodOptions.map((obj) => (
+            <MenuItem key={obj.value} value={obj.value}>
+              {obj.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   )
 }

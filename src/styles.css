@@ -1,4 +1,4 @@
-@import 'fontsource-roboto';
+@import '@fontsource/roboto';
 .react-js-cron {
   font-family: 'roboto';
   display: flex;
