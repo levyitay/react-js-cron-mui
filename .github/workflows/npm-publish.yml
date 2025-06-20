@@ -1,0 +1,40 @@
+name: Build and Publish to npmjs
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual publish (optional)'
+        required: false
+        default: ''
+
+jobs:
+  build-and-publish:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish to npmjs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_JS_TOKEN }}
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if npm view $(node -p "require('./package.json').name")@$PACKAGE_VERSION > /dev/null 2>&1; then
+            echo "Version $PACKAGE_VERSION already published. Skipping publish."
+          else
+            npm publish --access public
+          fi 
