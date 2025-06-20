@@ -1,6 +1,15 @@
-const path = require('path')
+import path from 'path'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default {
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
+  },
   stories: ['../src/**/*.stories.tsx'],
   addons: [
     {
