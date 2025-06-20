@@ -20,6 +20,8 @@ export default function CustomSelect(props: CustomSelectProps) {
     clockFormat,
     optionsList,
     unit,
+    multiple,
+    grid: _grid,
     ...selectProps
   } = props
 
@@ -97,13 +99,22 @@ export default function CustomSelect(props: CustomSelectProps) {
   const simpleClick = useCallback(
     (event: any) => {
       let newValueOption: number[] = event.target.value;
-      if (newValueOption.length == 0) {
-        newValueOption.push(0);
+      let newValue: number[];
+
+      if (Array.isArray(newValueOption)) {
+        if (newValueOption.length == 0) {
+          newValueOption.push(0);
+        }
+
+        if (newValueOption.length > 0 && !multiple) {
+          // Save only the last one selected in case it shouldn't allow multiple values
+          newValueOption = [newValueOption[newValueOption.length - 1]]
+        }
+
+        newValue = sort(newValueOption)
+      } else {
+        newValue = [newValueOption]
       }
-      newValueOption = Array.isArray(newValueOption)
-        ? sort(newValueOption)
-        : [newValueOption]
-      const newValue: number[] = newValueOption
 
       if (newValue.length === unit.total) {
         setValue([])

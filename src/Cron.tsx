@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { Button } from '@material-ui/core'
 import { CronProps, PeriodType } from './types'
-import Period from './fields/Period'
+import Period, { ALL_PERIODS } from './fields/Period'
 import MonthDays from './fields/MonthDays'
 import Months from './fields/Months'
 import Hours from './fields/Hours'
@@ -25,6 +25,14 @@ export default function Cron(props: CronProps) {
     onError,
     className,
     defaultPeriod = 'day',
+    periodsToDisplay = ALL_PERIODS,
+    allowMultipleSelectFor = [
+      'months',
+      'month-days',
+      'week-days',
+      'hours',
+      'minutes',
+    ],
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
@@ -276,6 +284,7 @@ export default function Cron(props: CronProps) {
         disabled={disabled}
         readOnly={readOnly}
         shortcuts={shortcuts}
+        periodsToDisplay={periodsToDisplay}
         {...selectProps}
       />
 
@@ -294,6 +303,7 @@ export default function Cron(props: CronProps) {
                 readOnly={readOnly}
                 period={periodForRender}
                 useCronIntervals={useCronIntervals}
+                multiple={allowMultipleSelectFor.includes('months')}
                 {...selectProps}
               />
             )}
@@ -310,6 +320,7 @@ export default function Cron(props: CronProps) {
                 leadingZero={leadingZero}
                 period={periodForRender}
                 useCronIntervals={useCronIntervals}
+                multiple={allowMultipleSelectFor.includes('month-days')}
                 {...selectProps}
               />
             )}
@@ -328,6 +339,7 @@ export default function Cron(props: CronProps) {
                   readOnly={readOnly}
                   period={periodForRender}
                   useCronIntervals={useCronIntervals}
+                  multiple={allowMultipleSelectFor.includes('week-days')}
                   {...selectProps}
                 />
               )}
@@ -345,6 +357,7 @@ export default function Cron(props: CronProps) {
                   clockFormat={clockFormat}
                   period={periodForRender}
                   useCronIntervals={useCronIntervals}
+                  multiple={allowMultipleSelectFor.includes('hours')}
                   {...selectProps}
                 />
               )}
@@ -361,6 +374,7 @@ export default function Cron(props: CronProps) {
                   leadingZero={leadingZero}
                   clockFormat={clockFormat}
                   useCronIntervals={useCronIntervals}
+                  multiple={allowMultipleSelectFor.includes('minutes')}
                   {...selectProps}
                 />
               )}

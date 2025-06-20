@@ -64,6 +64,31 @@ export interface CronProps {
   defaultPeriod?: PeriodType
 
   /**
+   * Define the options of periods that will be displayed.
+   *
+   * Example: If you only want the option to generate cron expressions to
+   * represent a time in the day you can define periodsToDisplay={['day']}.
+   * The other options won't be available in the period select component.
+   *
+   * Default: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+   *
+   * OBS: 'reboot' option will apply only when '@reboot' is listed in shortcuts list.
+   */
+  periodsToDisplay?: PeriodType[]
+
+  /**
+   * Define which fields can select multiple values.
+   *
+   * Example: If you don't want to allow multiple hours or minutes to be selected,
+   * you can define allowMultipleSelectFor={['months', 'month-days', 'week-days']}.
+   * This way only months, month days and week days select components will be allowed
+   * to have multiple values in the cron expression.
+   *
+   * Default: ['months', 'month-days', 'week-days', 'hours', 'minutes']
+   */
+  allowMultipleSelectFor?: Omit<CronType, 'period'>[]
+
+  /**
    * Disable the cron component.
    *
    * Default: false
@@ -230,12 +255,14 @@ export interface FieldProps {
   readOnly: boolean
   useCronIntervals: boolean
   period: PeriodType
+  multiple: boolean
 }
 export interface PeriodProps
-  extends Omit<FieldProps, 'value' | 'setValue' | 'period' | 'useCronIntervals'> {
+  extends Omit<FieldProps, 'value' | 'setValue' | 'period' | 'useCronIntervals' | 'multiple'> {
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
+  periodsToDisplay?: PeriodType[]
 }
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean

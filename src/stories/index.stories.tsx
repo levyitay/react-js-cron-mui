@@ -14,7 +14,13 @@ import {
   TableCell,
   TableBody,
   Typography,
-  TextFieldProps
+  TextFieldProps,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Checkbox,
+  ListItemText,
 } from '@material-ui/core'
 import InfoIcon from '@material-ui/icons/Info';
 import DividerWithText from '../components/DividerWithText'
@@ -28,6 +34,7 @@ import {
 import { ClearButtonAction } from '../types'
 
 import './styles.stories.css'
+import { ALL_PERIODS } from '../fields/Period'
 
 export default {
   title: 'ReactJS Cron',
@@ -527,6 +534,186 @@ export function DefaultPeriod() {
         <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;defaultPeriod&quot; is &quot;day&quot;
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function PeriodsToDisplay() {
+  const defaultValue = ''
+  const [periodsToDisplay, setPeriodsToDisplay] = useState<string[]>(['week', 'day'])
+  const [value, setValue] = useState(defaultValue)
+  const [key, setKey] = useState('render-periods-to-display-example')
+
+  function resetCronComponent() {
+    setKey(Math.random().toString(36).substring(7))
+  }
+
+  return (
+    <div>
+      <div style={{ marginBottom: 30 }}>
+        <p>You can select only specific periods to be displayed in the dropdown to restrict the options.</p>
+      </div>
+
+      <div>
+        <FormControl style={{ minWidth: 250, maxWidth: 500 }}>
+          <InputLabel id="periods-to-display-label">Periods to Display</InputLabel>
+          <Select
+            labelId="periods-to-display-label"
+            id="periods-to-display"
+            multiple
+            value={periodsToDisplay}
+            onChange={event => {
+              let selectedPeriods = event.target.value as string[]
+
+              if (selectedPeriods.length === 0) {
+                // Leave 'day' as fallback if none is selected
+                selectedPeriods = ['day']
+              }
+
+              setPeriodsToDisplay(selectedPeriods)
+              setValue(defaultValue)
+              resetCronComponent()
+            }}
+            input={<Input />}
+            renderValue={(selected: string[]) => selected.join(', ')}
+          >
+            {ALL_PERIODS.map(period => (
+              <MenuItem key={period} value={period}>
+                <Checkbox checked={periodsToDisplay.indexOf(period) > -1} />
+                <ListItemText primary={period} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+
+      <p>Value: {value}</p>
+
+      <Cron
+        key={key}
+        value={value}
+        setValue={setValue}
+        clearButtonAction="empty"
+        periodsToDisplay={periodsToDisplay}
+      />
+
+      <div>
+        <InfoIcon style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;periodsToDisplay&quot; is {JSON.stringify(ALL_PERIODS)}
+          <span style={{ marginLeft: 5 }}>
+            <i>(&quot;reboot&quot; option will apply only when &quot;@reboot&quot; is listed in shortcuts list.)</i>
+          </span>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function AllowMultipleSelectFor() {
+  const allFields = ['months', 'month-days', 'week-days', 'hours', 'minutes']
+  const defaultValue = ''
+  const [allowMultipleSelectFor, setAllowMultipleSelectFor] = useState(['months', 'month-days', 'week-days'])
+  const [value, setValue] = useState(defaultValue)
+  const [key, setKey] = useState('render-periods-to-display-example')
+
+  function resetCronComponent() {
+    setKey(Math.random().toString(36).substring(7))
+  }
+
+  return (
+    <div>
+      <div style={{ marginBottom: 30 }}>
+        <p>You can define specific fields in the component to accept multiple values.</p>
+      </div>
+
+      <div>
+        <FormControl style={{ minWidth: 250, maxWidth: 500 }}>
+          <InputLabel id="allow-multiple-select-for-label">Allow multiple select for</InputLabel>
+          <Select
+            labelId="allow-multiple-select-for-label"
+            id="allow-multiple-select-for"
+            multiple
+            value={allowMultipleSelectFor}
+            onChange={event => {
+              setAllowMultipleSelectFor(event.target.value as string[])
+              setValue(defaultValue)
+              resetCronComponent()
+            }}
+            input={<Input />}
+            renderValue={(selected: string[]) => selected.join(', ')}
+          >
+            {allFields.map(field => (
+              <MenuItem key={field} value={field}>
+                <Checkbox checked={allowMultipleSelectFor.indexOf(field) > -1} />
+                <ListItemText primary={field} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+
+      <p>Value: {value}</p>
+
+      <Cron
+        key={key}
+        leadingZero
+        value={value}
+        setValue={setValue}
+        clearButtonAction="empty"
+        allowMultipleSelectFor={allowMultipleSelectFor}
+      />
+
+      <div>
+        <InfoIcon style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;allowMultipleSelectFor&quot; is {JSON.stringify(allFields)}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function UseCronIntervals() {
+  const defaultValue = ' 0 8 * * 1,3,5'
+  const [value, setValue] = useState(defaultValue)
+  const [useCronIntervals, setUseCronIntervals] = useState(true)
+
+  return (
+    <div>
+      <div style={{ marginBottom: 30 }}>
+        <p>Controls whether to use cron intervals syntax.</p>
+        <p>Example: when <code>useCronIntervals=&#123;true&#125;</code>, a cron expression like &quot;<b>0 8 * * 1,3,5</b>&quot; (<i>&quot;At 08:00 AM, only on Monday, Wednesday, and Friday&quot;</i>)
+          would be changed to &quot;<b>0 8 * * 1-5/2</b>&quot; (<i>&quot;At 08:00 AM, every 2 days of the week, Monday through Friday&quot;</i>)</p>
+      </div>
+
+      <p>
+        Use cron intervals:
+        <Switch
+          checked={useCronIntervals}
+          onChange={event => {
+            setUseCronIntervals(event.target.checked)
+          }}
+        />
+      </p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+
+      <Cron
+        leadingZero
+        value={value}
+        setValue={setValue}
+        clearButtonAction="empty"
+        clockFormat="12-hour-clock"
+        useCronIntervals={useCronIntervals}
+      />
+
+      <div>
+        <InfoIcon style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;useCronIntervals&quot; is true
         </span>
       </div>
     </div>
