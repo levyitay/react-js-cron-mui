@@ -21,8 +21,8 @@ import {
   MenuItem,
   Checkbox,
   ListItemText,
-} from '@material-ui/core'
-import InfoIcon from '@material-ui/icons/Info';
+} from '@mui/material'
+import InfoIcon from '@mui/icons-material/Info';
 import DividerWithText from '../components/DividerWithText'
 
 import Cron, { CronError, AllowEmpty, ClockFormat, PeriodType } from '../index'
@@ -597,6 +597,7 @@ export function PeriodsToDisplay() {
         setValue={setValue}
         clearButtonAction="empty"
         periodsToDisplay={periodsToDisplay}
+        defaultPeriod={periodsToDisplay[0]}
       />
 
       <div>
@@ -677,9 +678,14 @@ export function AllowMultipleSelectFor() {
 }
 
 export function UseCronIntervals() {
-  const defaultValue = ' 0 8 * * 1,3,5'
+  const defaultValue = '0 8 * * 1,3,5'
   const [value, setValue] = useState(defaultValue)
   const [useCronIntervals, setUseCronIntervals] = useState(true)
+  const [key, setKey] = useState('use-cron-intervals-example')
+
+  function resetCronComponent() {
+    setKey(Math.random().toString(36).substring(7))
+  }
 
   return (
     <div>
@@ -695,6 +701,7 @@ export function UseCronIntervals() {
           checked={useCronIntervals}
           onChange={event => {
             setUseCronIntervals(event.target.checked)
+            resetCronComponent()
           }}
         />
       </p>
@@ -702,6 +709,7 @@ export function UseCronIntervals() {
       <p>Value: {value}</p>
 
       <Cron
+        key={key}
         leadingZero
         value={value}
         setValue={setValue}

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { CronProps, PeriodType } from './types'
 import Period, { ALL_PERIODS } from './fields/Period'
 import MonthDays from './fields/MonthDays'
@@ -246,7 +246,7 @@ export default function Cron(props: CronProps) {
       if (clearButton && !readOnly) {
         return (
           <Button
-          style={{marginLeft:'10px'}}
+            sx={{ ml: 1 }}
             className={clearButtonClassName}
             variant='contained'
             color='secondary'
